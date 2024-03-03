@@ -59,8 +59,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         // Setting cookies
         Cookie c_user = new Cookie("username", username);
         Cookie c_pass = new Cookie("password", password);
-        c_user.setMaxAge(10);
-        c_pass.setMaxAge(10);
+        c_user.setMaxAge(5000);
+        c_pass.setMaxAge(5000);
         response.addCookie(c_pass);
         response.addCookie(c_user);
 

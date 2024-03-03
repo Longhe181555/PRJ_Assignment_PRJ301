@@ -151,4 +151,16 @@ public void update(Attendance entity) {
         Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
+     public void updateAttendances(int aid, String isPresent, String description) {
+        try {
+            String sql = "UPDATE Attendance SET isPresent = ?, Description = ? WHERE aid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, isPresent);
+            stm.setString(2, description);
+            stm.setInt(3, aid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -12,6 +12,7 @@
     <title>JSP Page</title>
 </head>
 <body>
+    <p>${requestScope.testsize}</p>
     <h2>Take Attendance</h2>
     <form action="attendance?tid=${tid}&ssid=${ssid}" method="post">
         <table border="1">
@@ -19,6 +20,7 @@
                 <th>Student ID</th>
                 <th>Student Name</th>
                 <th>Is Present</th>
+                <th>Attendance Description</th> <!-- New column for the text box -->
             </tr>
             <c:forEach var="attendance" items="${requestScope.takeattendance}">
                 <tr>
@@ -27,6 +29,9 @@
                     <td>
                         <input type="radio" name="isPresent_${attendance.aid}" value="T" ${attendance.isPresent eq 'T' ? 'checked' : ''}> Present
                         <input type="radio" name="isPresent_${attendance.aid}" value="F" ${attendance.isPresent eq 'F' ? 'checked' : ''}> Absent
+                    </td>
+                    <td>
+                        <input type="text" name="description_${attendance.aid}" value="${attendance.description}">
                     </td>
                 </tr>
             </c:forEach>

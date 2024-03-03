@@ -113,24 +113,18 @@ public class SessionDBContext extends DBContext<Session> {
             Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
-   public ArrayList<Session> getBy(int lid, Date from, Date to) {
-    ArrayList<Session> sess = new ArrayList<>();
-    try {
-        String sql = "SELECT \n"
-                + "ses.ssid, ses.isTaken, ses.date,\n"
-                + "g.gid, g.gname, t.tid, t.tname,\n"
-                + "r.rid, r.rname\n"
-                + "FROM Session ses INNER JOIN [Group] g ON ses.gid = g.gid\n"
-                + "                INNER JOIN TimeSlot t ON t.tsid = ses.tsid\n"
-                + "                INNER JOIN Room r ON r.rid = ses.rid\n"
-                + "WHERE ses.tid = ? AND ses.[date] >= ? AND ses.[date] <= ?";
-        PreparedStatement stm = connection.prepareStatement(sql);
-        stm.setInt(1, lid);
-        stm.setDate(2, from);
-        stm.setDate(3, to);
-        ResultSet rs = stm.executeQuery();
-        while (rs.next()) {
-           Session session = new Session();
+    public ArrayList<Session> getBy(int tid, Date from, Date to) {
+        ArrayList<Session> sess = new ArrayList<>();
+        try {
+            String sql = "SELECT ses.ssid, ses.gid, ses.tid, ses.rid, ses.tsid, ses.Date, ses.isTaken FROM Session ses " +
+                         "WHERE ses.tid = ? AND ses.[date] >= ? AND ses.[date] <= ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, tid);
+            stm.setDate(2, from);
+            stm.setDate(3, to);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Session session = new Session();
                 session.setSsid(rs.getInt("ssid"));
                 session.setGroup(g.get(rs.getInt("gid")));
                 session.setTeacher(t.get(rs.getInt("tid")));
@@ -138,11 +132,11 @@ public class SessionDBContext extends DBContext<Session> {
                 session.setTimeslot(ts.get(rs.getInt("tsid")));
                 session.setDate(rs.getDate("Date"));
                 session.setIsTaken(rs.getString("isTaken"));
-            sess.add(session);
+                sess.add(session);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        return sess;
     }
-    return sess;
-}
 }

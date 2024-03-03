@@ -6,27 +6,23 @@
     </servlet>
     <servlet>
         <servlet-name>StudentController</servlet-name>
-        <servlet-class>controller.StudentController.StudentController</servlet-class>
+        <servlet-class>controller.student.StudentController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TeacherController</servlet-name>
-        <servlet-class>controller.TeacherController.TeacherController</servlet-class>
+        <servlet-class>controller.teacher.TeacherController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TakeAttendanceController</servlet-name>
-        <servlet-class>controller.TeacherController.TakeAttendanceController</servlet-class>
+        <servlet-class>controller.teacher.TakeAttendanceController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>controller.authentication</servlet-name>
         <servlet-class>controller.authentication.LoginController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchStudentController</servlet-name>
-        <servlet-class>controller.StudentController.SearchController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DeleteTeacher</servlet-name>
-        <servlet-class>controller.TeacherController.DeleteController</servlet-class>
+        <servlet-name>TimeTableController</servlet-name>
+        <servlet-class>controller.teacher.TimeTableController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>StudentController</servlet-name>
@@ -45,15 +41,11 @@
         <url-pattern>/login_auth</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchStudentController</servlet-name>
-        <url-pattern>/ssearch</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Displayloaded</servlet-name>
         <url-pattern>/display</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteTeacher</servlet-name>
-        <url-pattern>/tdelete</url-pattern>
+        <servlet-name>TimeTableController</servlet-name>
+        <url-pattern>/teacher/timetable</url-pattern>
     </servlet-mapping>
 </web-app>
