@@ -2,79 +2,58 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.teacher;
 
+import controller.authentication.BaseRequiredAuthenticationController;
+import dal.*;
+import entity.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name="TakeAttendances", urlPatterns={"/takeattendances"})
-public class TakeAttendancesController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TakeAttendancesController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TakeAttendancesController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+public class TakeAttendancesController extends BaseRequiredAuthenticationController {
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account) throws ServletException, IOException {
+        int ssid = Integer.parseInt(request.getParameter("ssid")); // Assuming "ssid" is the session ID
+        int tid = Integer.parseInt(request.getParameter("tid"));
+        AttendanceDBContext attendanceDB = new AttendanceDBContext();
+        StudentDBContext studentDB = new StudentDBContext();
+        SessionDBContext sessionDB = new SessionDBContext();
+        ArrayList<Student> students = studentDB.getStudentsBySession(ssid);
+        ArrayList<Attendance> attendances = new ArrayList<>();
+        Session session = new Session();
+         for (Student student : students) { 
+             System.out.println(student.getSname());
+         }
+        session.setSsid(ssid);
+        for (Student student : students) {
+            Attendance attendance = new Attendance();
+            attendance.setSession(session);
+            attendance.setStudent(student);
+            attendance.setDescription(request.getParameter("description_" + student.getSid()));
+            attendance.setIsPresent(request.getParameter("present_" + student.getSid()));
+            attendances.add(attendance);
         }
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+        attendanceDB.takeAttendances(ssid, attendances);
+        response.sendRedirect("takeattendance?ssid=" + ssid + "&tid=" + tid);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account) throws ServletException, IOException {
+        int ssid = Integer.parseInt(request.getParameter("ssid"));  // Assuming "id" is the session ID
+        AttendanceDBContext attendanceDB = new AttendanceDBContext();
+        ArrayList<Attendance> attendances = attendanceDB.getAttendanceBySession(ssid);
+        request.setAttribute("takeattendance", attendances);
+        request.getRequestDispatcher("entity/teacher/takeattendance.jsp").forward(request, response);
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";

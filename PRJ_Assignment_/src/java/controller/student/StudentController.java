@@ -62,11 +62,6 @@ public class StudentController extends BaseRequiredAuthenticationController {
             request.setAttribute("students", samegroup);
         }
 
-        //load Attendances
-        AttendanceDBContext dba = new AttendanceDBContext();
-        ArrayList<Attendance> attendances = dba.getBySid(enteredId);
-        request.setAttribute("studentAttendance", attendances);
-
         //Load Exam student has to take
         ExamDBContext dbExam = new ExamDBContext();
         ArrayList<Exam> exams = dbExam.getBySid(enteredId);

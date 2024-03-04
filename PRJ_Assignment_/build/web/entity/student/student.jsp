@@ -9,39 +9,11 @@
     <body>
         <div>Student Name: ${studentLogIn.sname}</div>
         <button onclick="window.location.href = 'login_auth'">Sign out</button>
-        <div class="table">
-            <h2>Attendance List</h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>SID</th>
-                        <th>Present</th>
-                        <th>Description</th>
-                        <th>Teacher</th>
-                        <th>Group Name</th>
-                        <th>Subject</th>
-                        <th>Date</th>
-                        <th>Time Slot</th>
-                        <th>Room Number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="attendance" items="${studentAttendance}">
-                        <tr>
-                            <td>${attendance.aid}</td>
-                            <td>${attendance.isPresent}</td>
-                            <td>${attendance.description}</td>
-                            <td>${attendance.session.teacher.tname}</td>
-                            <td>${attendance.session.group.gname}</td>
-                            <td>${attendance.session.group.subject.subname}</td>
-                            <td>${attendance.session.date}</td>
-                            <td>${attendance.session.timeslot.startHour}:${String.format("%02d", attendance.session.timeslot.startMinute)}-${attendance.session.timeslot.endHour}:${String.format("%02d", attendance.session.timeslot.endMinute)}</td>
-                            <td>${attendance.session.room.rnumber}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
+
+        <br>
+        <button onclick="window.location.href = 'student/timetable?id=${param.id}'">View Time Table</button>
+        <br>
+
         <div class="table">
             <h2>Groups</h2>
             <table border="1">
@@ -65,6 +37,7 @@
                 </tbody>
             </table>
         </div>
+
         <div>
             <h2>Select Group</h2>
             <form id="GroupSelection" action="student" method="GET"> 
@@ -77,10 +50,10 @@
                 </select>
             </form>
         </div>
-            <div>
+        <div>
             <jsp:include page="../student/list.jsp"></jsp:include>
             </div>
-            
+
             <div class="table-container">
                 <div class="table">
                     <h2>Exam List</h2>

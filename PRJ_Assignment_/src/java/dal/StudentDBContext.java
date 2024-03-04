@@ -113,10 +113,8 @@ public class StudentDBContext extends DBContext<Student> {
         try {
             String sql = "SELECT DISTINCT Student.sid, Student.sname, Student.sgender "
                     + "FROM Student "
-                    + "JOIN Attendance ON Student.sid = Attendance.sid "
-                    + "JOIN Session ON Attendance.ssid = Session.ssid "
-                    + "JOIN [Group] ON Session.gid = [Group].gid "
-                    + "WHERE [Group].gid = ?";
+                    + "JOIN Enrollment ON Student.sid = Enrollment.sid "
+                    + "WHERE Enrollment.gid = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, groupId);
             ResultSet rs = stm.executeQuery();
@@ -187,5 +185,29 @@ public class StudentDBContext extends DBContext<Student> {
         }
         return students;
     }
-    
+
+    public ArrayList<Student> getStudentsBySession(int ssid) {
+        ArrayList<Student> students = new ArrayList<>();
+        try {
+            String sql = "SELECT s.sid, s.sname, s.sgender "
+                    + "FROM Student s "
+                    + "INNER JOIN Enrollment e ON s.sid = e.sid "
+                    + "INNER JOIN [Group] g ON g.gid = e.gid "
+                    + "INNER JOIN Session se ON se.gid = g.gid "
+                    + "WHERE se.ssid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, ssid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Student student = new Student();
+                student.setSid(rs.getInt("sid"));
+                student.setSname(rs.getString("sname"));
+                student.setSgender(rs.getBoolean("sgender"));
+                students.add(student);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return students;
+    }
 }

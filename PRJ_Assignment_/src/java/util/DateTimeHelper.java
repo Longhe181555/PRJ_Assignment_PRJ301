@@ -18,7 +18,7 @@ public class DateTimeHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
-        calendar.add(Calendar.DAY_OF_MONTH, -dayOfWeek);
+        calendar.add(Calendar.DAY_OF_MONTH, -dayOfWeek+1);
         return calendar.getTime();
     }
 

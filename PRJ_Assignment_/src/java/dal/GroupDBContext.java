@@ -88,15 +88,13 @@ public Group get(int id) {
     public void insert(Group entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-   public ArrayList<Group> getBySid(int sid) {
+  public ArrayList<Group> getBySid(int sid) {
     ArrayList<Group> groups = new ArrayList<>();
     try {
         String sql = "SELECT DISTINCT [Group].gid, [Group].gname, [Group].subid, [Group].pic " +
-                     "FROM Student " +
-                     "JOIN Attendance ON Student.sid = Attendance.sid " +
-                     "JOIN Session ON Attendance.ssid = Session.ssid " +
-                     "JOIN [Group] ON Session.gid = [Group].gid " +
-                     "WHERE Student.sid = ?";
+                     "FROM [Group] " +
+                     "JOIN Enrollment ON [Group].gid = Enrollment.gid " +
+                     "WHERE Enrollment.sid = ?";
         PreparedStatement stm = connection.prepareStatement(sql);
         stm.setInt(1, sid);
         ResultSet rs = stm.executeQuery();

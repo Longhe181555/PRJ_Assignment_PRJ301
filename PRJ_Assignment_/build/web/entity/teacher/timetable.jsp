@@ -8,7 +8,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <button onclick="window.location.href = 'teacher?id=${param.id}'">Back to teacher page</button>
+        <button onclick="window.location.href = '../teacher?id=${param.id}'">Back to teacher page</button>
         <form action="timetable" method="GET">
             <input type="hidden" value="${param.id}" name="id"/>
             From: <input type="date" name="from" value="${requestScope.from}"/> -
@@ -33,9 +33,9 @@
                             <c:forEach items="${requestScope.sessions}" var="session">
                                 <c:if test="${session.date eq d and session.timeslot.tsid eq slot.tsid}">
                                     ${session.group.gname} - ${session.group.subject.subname}
-                                    <form action="../attendance" method="GET">
-                                        <input type="hidden" name="tid" value="${session.teacher.tid}" />
+                                    <form action="../takeattendance" method="GET">
                                         <input type="hidden" name="ssid" value="${session.ssid}" />
+                                        <input type="hidden" name="tid" value="${session.teacher.tid}" />
                                         <button type="submit">
                                             <c:choose>
                                                 <c:when test="${session.isTaken eq 'T'}">Edit Attendance</c:when>
@@ -84,7 +84,7 @@
                             <td>${session.group.gname}</td>
                             <td>${session.group.subject.subname}</td>
                             <td>
-                                <form action="../attendance" method="GET">
+                                <form action="../takeattendance" method="GET">
                                     <input type="hidden" name="tid" value="${session.teacher.tid}" />
                                     <input type="hidden" name="ssid" value="${session.ssid}" />
                                     <button type="submit">

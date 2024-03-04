@@ -1,8 +1,3 @@
-<%-- 
-    Document   : takeAttendance
-    Created on : Feb 18, 2024, 6:54:09 PM
-    Author     : ADMIN
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,36 +7,35 @@
     <title>JSP Page</title>
 </head>
 <body>
-    <p>${requestScope.testsize}</p>
     <h2>Take Attendance</h2>
-    <form action="attendance?tid=${tid}&ssid=${ssid}" method="post">
+    <form action="takeattendance" method="post">
         <table border="1">
             <tr>
                 <th>Student ID</th>
                 <th>Student Name</th>
                 <th>Is Present</th>
-                <th>Attendance Description</th> <!-- New column for the text box -->
+                <th>Description</th> <!-- New column for the text box -->
             </tr>
-            <c:forEach var="attendance" items="${requestScope.takeattendance}">
+            <c:forEach var="attendance" items="${takeattendance}">
                 <tr>
                     <td>${attendance.student.sid}</td>
                     <td>${attendance.student.sname}</td>
                     <td>
-                        <input type="radio" name="isPresent_${attendance.aid}" value="T" ${attendance.isPresent eq 'T' ? 'checked' : ''}> Present
-                        <input type="radio" name="isPresent_${attendance.aid}" value="F" ${attendance.isPresent eq 'F' ? 'checked' : ''}> Absent
+                        <input type="radio" name="present_${attendance.student.sid}" value="T" ${attendance.isPresent eq 'T' ? 'checked' : ''}> Present
+                        <input type="radio" name="present_${attendance.student.sid}" value="F" ${attendance.isPresent eq 'F' ? 'checked' : ''}> Absent
                     </td>
                     <td>
-                        <input type="text" name="description_${attendance.aid}" value="${attendance.description}">
+                        <!-- Add a description text box with a unique name -->
+                        <input type="text" name="description_${attendance.student.sid}" value="${attendance.description}">
                     </td>
                 </tr>
             </c:forEach>
         </table>
         <br>
         <input type="submit" value="Save Attendance">
-        <!-- Include hidden fields for teacherId and sessionId -->
-        <input type="hidden" name="tid" value="${tid}">
-        <input type="hidden" name="ssid" value="${ssid}">
+        <input type="hidden" name="ssid" value="${param.ssid}">
+        <input type="hidden" name="tid" value="${param.tid}">
     </form>
-    <button onclick="window.location.href='teacher?id=${tid}'">Back to teacher page</button>
+    <button onclick="window.location.href='teacher/timetable?id=${param.tid}'">Back to timetable page</button>
 </body>
 </html>
