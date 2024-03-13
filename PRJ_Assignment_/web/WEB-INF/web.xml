@@ -28,6 +28,14 @@
         <servlet-name>StudentTimeTableController</servlet-name>
         <servlet-class>controller.student.TimeTableController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActivityDetailsController</servlet-name>
+        <servlet-class>controller.ActivityDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>controller.authentication.LogoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StudentController</servlet-name>
         <url-pattern>/student</url-pattern>
@@ -55,5 +63,13 @@
     <servlet-mapping>
         <servlet-name>StudentTimeTableController</servlet-name>
         <url-pattern>/student/timetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActivityDetailsController</servlet-name>
+        <url-pattern>/activitydetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -127,6 +127,9 @@
                             <td>${session.isTaken}</td>
                         </tr>
                     </c:forEach>
+                         </tbody>
+                </table>
+            </div>
              <div class="table">
                     <h2>Attendance List</h2>
 
@@ -138,6 +141,7 @@
                                 <th>Student ID</th>
                                 <th>Present</th>
                                 <th>Description</th>
+                                <th>Captured Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -149,6 +153,7 @@
                             <td>${attendance.student.sid}</td>
                             <td>${attendance.isPresent}</td>
                             <td>${attendance.description}</td>
+                            <td>${attendance.capturedTime}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

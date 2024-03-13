@@ -92,19 +92,29 @@
                 <p style="font-weight: bold"> FAP mobile app (myFAP) is ready at </p>
                 <div>
                     <tr>
-                <td><a href="https://apps.apple.com/app/id1527723314">
-                        <img src="https://fap.fpt.edu.vn/images/app-store.png" style="width: 120px; height: 40px" alt="apple store" /></a></td>
-                <td><a href="https://play.google.com/store/apps/details?id=com.fuct">
-                        <img src="https://fap.fpt.edu.vn/images/play-store.png" style="width: 120px; height: 40px" alt="google store" /></a></td>
-            </tr> 
+                        <td><a href="https://apps.apple.com/app/id1527723314">
+                                <img src="https://fap.fpt.edu.vn/images/app-store.png" style="width: 120px; height: 40px" alt="apple store" /></a></td>
+                        <td><a href="https://play.google.com/store/apps/details?id=com.fuct">
+                                <img src="https://fap.fpt.edu.vn/images/play-store.png" style="width: 120px; height: 40px" alt="google store" /></a></td>
+                    </tr> 
                 </div>
             </div>
         </div>
 
-           
-    <div id="nav-user" style="float: right;width: 100%; padding: 10px 10px;background-color: lightgrey;opacity: 50%">   </div>
+
+        <div id="nav-user" style="float: right;width: 100%; padding: 10px 10px;background-color: lightgrey;opacity: 50%">   </div>
         <br>
         <br>
+        <div style="text-align: center">
+            <c:if test="${not empty sessionScope.loginResult}">
+                <div style="color: red;">
+                    ${sessionScope.loginResult}
+                </div>
+                <c:set var="sessionScope.loginResult" value="" />
+            </c:if>
+
+        </div>
+
         <div class="container">
             <div class="left-box">
                 <div class="top-left-corner">Display</div>

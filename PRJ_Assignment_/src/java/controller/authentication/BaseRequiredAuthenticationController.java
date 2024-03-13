@@ -60,7 +60,8 @@ public abstract class BaseRequiredAuthenticationController extends HttpServlet {
         }
         else
         {
-            resp.getWriter().println("access denied!");
+            req.getSession().setAttribute("loginResult", "Session timer run out/ Access denied please try again!");
+            resp.sendRedirect(req.getContextPath() +"/login_auth");
         }
     
     }
@@ -76,7 +77,8 @@ public abstract class BaseRequiredAuthenticationController extends HttpServlet {
         }
         else
         {
-            resp.getWriter().println("access denied!");
+            req.getSession().setAttribute("loginResult", "Session timer run out/ Access denied please try again!");
+            resp.sendRedirect(req.getContextPath() +"/login_auth");
         }
     }
     

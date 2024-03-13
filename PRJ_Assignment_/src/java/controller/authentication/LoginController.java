@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
 public class LoginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,7 +49,7 @@ public class LoginController extends HttpServlet {
         RoleDBContext dbr = new RoleDBContext();
         AccountDBContext db = new AccountDBContext();
         Account account = db.getByUsernamePassword(username, password);
-       
+
         if (account != null) {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);
@@ -63,23 +62,21 @@ public class LoginController extends HttpServlet {
             response.addCookie(c_pass);
             response.addCookie(c_user);
 
-            
             Role role = dbr.getByUsername(username);
-            if(role.getName().equals("student")){
-            response.sendRedirect("student?id="+ account.getId());
-            } else if(role.getName().equals("teacher")||role.getName().equals("supervisor")){
-            response.sendRedirect("teacher?id="+ account.getId());
-            }     
-            
-    
+            if (role.getName().equals("student")) {
+                response.sendRedirect("student?id=" + account.getId());
+            } else if (role.getName().equals("teacher") || role.getName().equals("supervisor")) {
+                response.sendRedirect("teacher?id=" + account.getId());
+            }
+
         } else {
             //login failed!
-            response.getWriter().println("login failed!");
+            String loginResult = "Login failed, please try again";// Store the login result in the session
+            request.getSession().setAttribute("loginResult", loginResult);
+            // Redirect to the login_auth page
+            response.sendRedirect("login_auth");
         }
 
     }
 
 }
-
-
-

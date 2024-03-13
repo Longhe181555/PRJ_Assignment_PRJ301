@@ -16,7 +16,8 @@ public class Session implements IEntity {
     private Room room;
     private TimeSlot timeslot;
     private ArrayList<Attendance> atts;
-
+    private Date date;
+    private String isTaken;
     public ArrayList<Attendance> getAtts() {
         return atts;
     }
@@ -80,8 +81,7 @@ public class Session implements IEntity {
     public void setIsTaken(String isTaken) {
         this.isTaken = isTaken;
     }
-    private Date date;
-    private String isTaken;
+  
 
    
 }

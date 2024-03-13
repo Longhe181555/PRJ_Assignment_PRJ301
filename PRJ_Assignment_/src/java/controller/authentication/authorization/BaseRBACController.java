@@ -33,7 +33,8 @@ public abstract class BaseRBACController extends BaseRequiredAuthenticationContr
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
         ArrayList<Role> roles = getRoles(req, account);
         if (roles.size() < 1) {
-            resp.getWriter().println("access denied!");
+            req.getSession().setAttribute("loginResult", "Session timer run out/ Access denied please login and try again!");
+            resp.sendRedirect(req.getContextPath() +"/login_auth");
         } else {
             doPost(req, resp, account, roles);
         }
@@ -46,7 +47,8 @@ public abstract class BaseRBACController extends BaseRequiredAuthenticationContr
     protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
         ArrayList<Role> roles = getRoles(req, account);
         if (roles.size() < 1) {
-            resp.getWriter().println("access denied!");
+            req.getSession().setAttribute("loginResult", "Session timer run out/ Access denied please login and try again!");
+            resp.sendRedirect(req.getContextPath() +"/login_auth");
         } else {
             doGet(req, resp, account, roles);
         }

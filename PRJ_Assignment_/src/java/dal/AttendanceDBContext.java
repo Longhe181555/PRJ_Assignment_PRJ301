@@ -17,7 +17,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
     public ArrayList<Attendance> list() {
         ArrayList<Attendance> attendances = new ArrayList<>();
         try {
-            String sql = "SELECT aid, ssid, sid, isPresent, Description FROM Attendance";
+            String sql = "Select aid, ssid, sid, isPresent, Description, Date,Description FROM Attendance";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -27,6 +27,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 attendance.setStudent(s.get(rs.getInt("sid")));
                 attendance.setIsPresent(rs.getString("isPresent"));
                 attendance.setDescription(rs.getString("Description"));
+                attendance.setCapturedTime(rs.getDate("Date"));
                 attendances.add(attendance);
             }
         } catch (SQLException ex) {
@@ -35,34 +36,27 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         return attendances;
     }
 
-    public void insert(Attendance entity) {
+    public Attendance getBySsidandSid(int ssid,int sid) {
+        Attendance attendance = null;
         try {
-            String sql = "INSERT INTO Attendance (ssid, sid, isPresent, Description) VALUES (?, ?, ?, ?)";
+            String sql = "SELECT aid, ssid, sid, isPresent, Description, Date FROM Attendance WHERE ssid = ? and sid = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, entity.getSession().getSsid());
-            stm.setInt(2, entity.getStudent().getSid());
-            stm.setString(3, entity.getIsPresent());
-            stm.setString(4, entity.getDescription());
-            stm.executeUpdate();
+            stm.setInt(1, ssid);
+            stm.setInt(1, sid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                attendance = new Attendance();
+                attendance.setAid(rs.getInt("aid"));
+                attendance.setSession(ss.get(rs.getInt("ssid")));
+                attendance.setStudent(s.get(rs.getInt("sid")));
+                attendance.setIsPresent(rs.getString("isPresent"));
+                attendance.setDescription(rs.getString("Description"));
+                attendance.setCapturedTime(rs.getDate("Date"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void update(Attendance entity) {
-        try {
-            String sql = "UPDATE Attendance SET ssid = ?, sid = ?, isPresent = ?, Description = ? WHERE aid = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, entity.getSession().getSsid());
-            stm.setInt(2, entity.getStudent().getSid());
-            stm.setString(3, entity.getIsPresent());
-            stm.setString(4, entity.getDescription());
-            stm.setInt(5, entity.getAid());
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return attendance;
     }
 
     @Override
@@ -177,8 +171,6 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         return attendances;
     }
 
-   
-
     public void updateAttendances(int aid, String isPresent, String description) {
         try {
             String sql = "UPDATE Attendance SET isPresent = ?, Description = ? WHERE aid = ?";
@@ -239,5 +231,15 @@ public class AttendanceDBContext extends DBContext<Attendance> {
                 Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @Override
+    public void insert(Attendance entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void update(Attendance entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

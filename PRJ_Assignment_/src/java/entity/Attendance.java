@@ -1,5 +1,5 @@
 package entity;
-
+import java.sql.Date;
 public class Attendance implements IEntity {
 
     private int aid;
@@ -7,6 +7,17 @@ public class Attendance implements IEntity {
     private Student student;
     private String isPresent;
     private String description;
+    private Date capturedTime;
+
+    public Date getCapturedTime() {
+        return capturedTime;
+    }
+
+    public void setCapturedTime(Date capturedTime) {
+        this.capturedTime = capturedTime;
+    }
+
+    
 
     public int getAid() {
         return aid;
