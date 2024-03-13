@@ -4,10 +4,7 @@
  */
 package entity;
 
-/**
- *
- * @author sonnt
- */
+
 public interface IEntity {
     
 }

@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Your JSP Page</title>
         <style>
-            body {
+            .container {
+                max-height: 300px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -82,14 +83,34 @@
             }
 
         </style>
+
     </head>
     <body>
+        <div style="display: flex; justify-content: space-evenly">
+            <h1><span>FPT University Academic Portal</span> </h1> 
+            <div style="display: flex; flex-direction: column">
+                <p style="font-weight: bold"> FAP mobile app (myFAP) is ready at </p>
+                <div>
+                    <tr>
+                <td><a href="https://apps.apple.com/app/id1527723314">
+                        <img src="https://fap.fpt.edu.vn/images/app-store.png" style="width: 120px; height: 40px" alt="apple store" /></a></td>
+                <td><a href="https://play.google.com/store/apps/details?id=com.fuct">
+                        <img src="https://fap.fpt.edu.vn/images/play-store.png" style="width: 120px; height: 40px" alt="google store" /></a></td>
+            </tr> 
+                </div>
+            </div>
+        </div>
+
+           
+    <div id="nav-user" style="float: right;width: 100%; padding: 10px 10px;background-color: lightgrey;opacity: 50%">   </div>
+        <br>
+        <br>
         <div class="container">
             <div class="left-box">
                 <div class="top-left-corner">Display</div>
                 <div class="button-container">
                     <button onclick="redirectToDisplay()" style="background-color: #337ab7;
-                            background-image: linear-gradient(rgb(51, 122, 183), rgb(51, 122, 183)); 
+                            background-image: linear-gradient(rgb(51, 122, 183), rgb(51, 122, 183));
                             color: #fff; border: none; border-radius: 4px; box-shadow: #ffffff 0px 1px 0px 0px; padding: 4px 10px; cursor: pointer;">
                         Display
                     </button>
@@ -106,17 +127,23 @@
                     </div>
                     <div class="button-container">
                         <input type="submit" value="Login" style="background-color: #337ab7;
-                               background-image: linear-gradient(rgb(51, 122, 183), rgb(51, 122, 183)); 
+                               background-image: linear-gradient(rgb(51, 122, 183), rgb(51, 122, 183));
                                color: #fff; border: none; border-radius: 4px; box-shadow: #ffffff 0px 1px 0px 0px;padding: 4px 10px;  cursor: pointer;">
                     </div>
                 </form>
             </div>
         </div>
 
-        <script>
-            function redirectToDisplay() {
-                window.location.href = "display";
-            }
-        </script>
+        <p style="text-align: center; text-decoration: none">  
+            © Powered by <a href="http://fpt.edu.vn" target="_blank" style="text-decoration: none">FPT University</a>&nbsp;|&nbsp;
+            <a href="http://cms.fpt.edu.vn/ style="text-decoration: none"" target="_blank" style="text-decoration: none">CMS</a>&nbsp;|&nbsp; <a href="http://library.fpt.edu.vn" target="_blank" style="text-decoration: none">library</a>&nbsp;|&nbsp; <a href="http://library.books24x7.com" style="text-decoration: none" target="_blank">books24x7</a>
+            <span id="ctl00_lblHelpdesk"></span>
+
+
+            <script>
+                function redirectToDisplay() {
+                    window.location.href = "display";
+                }
+            </script>
     </body>
 </html>

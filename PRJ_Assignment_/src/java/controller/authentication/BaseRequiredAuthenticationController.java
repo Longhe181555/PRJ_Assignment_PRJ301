@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- *
- * @author sonnt
- */
+
 public abstract class BaseRequiredAuthenticationController extends HttpServlet {
     
     private Account getAuthenticatedAccount(HttpServletRequest req)

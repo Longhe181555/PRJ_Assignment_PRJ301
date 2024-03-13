@@ -10,15 +10,11 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author sonnt
- */
 public class AccountDBContext extends DBContext<Account> {
 
     public Account getByUsernamePassword(String username, String password) {
         try {
-            String sql = "SELECT username, password, id, role FROM Account\n"
+            String sql = "SELECT username, password, id FROM Account\n"
                     + "WHERE username = ? AND password = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
@@ -29,7 +25,6 @@ public class AccountDBContext extends DBContext<Account> {
                 account.setUsername(username);
                 account.setPassword(rs.getString("password"));
                 account.setId(rs.getInt("id"));
-                account.setRole(rs.getString("role"));
                 return account;
             }
         } catch (SQLException ex) {
@@ -42,15 +37,15 @@ public class AccountDBContext extends DBContext<Account> {
 public ArrayList<Account> list() {
     ArrayList<Account> accounts = new ArrayList<>();
     try {
-        String sql = "SELECT username, password, id, role FROM Account";
+        String sql = "SELECT username, password,id FROM Account";
         Statement stm = connection.createStatement();
         ResultSet rs = stm.executeQuery(sql);
         while (rs.next()) {
             Account account = new Account();
             account.setUsername(rs.getString("username"));
             account.setPassword(rs.getString("password"));
-            account.setId(rs.getInt("id"));
-            account.setRole(rs.getString("role"));
+             account.setId(rs.getInt("id"));
+           
             accounts.add(account);
         }
     } catch (SQLException ex) {

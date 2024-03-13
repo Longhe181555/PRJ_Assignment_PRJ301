@@ -241,14 +241,14 @@
                     <th>Username</th>
                     <th>Password</th>
                     <th>ID</th>
-                    <th>Role</th>
+     
                 </tr>
                 <c:forEach var="account" items="${accounts}">
                     <tr>
                         <td>${account.username}</td>
                         <td>${account.password}</td>
                         <td>${account.id}</td>
-                        <td>${account.role}</td>
+
                     </tr>
                 </c:forEach>
             </table> 

@@ -5,6 +5,7 @@
 package controller.teacher;
 
 import controller.authentication.BaseRequiredAuthenticationController;
+import controller.authentication.authorization.BaseRBACController;
 import dal.*;
 import entity.*;
 import java.io.IOException;
@@ -13,14 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/**
- *
- * @author ADMIN
- */
-public class TakeAttendancesController extends BaseRequiredAuthenticationController {
+
+public class TakeAttendancesController extends BaseRBACController {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles) throws ServletException, IOException {
         int ssid = Integer.parseInt(request.getParameter("ssid")); // Assuming "ssid" is the session ID
         int tid = Integer.parseInt(request.getParameter("tid"));
         AttendanceDBContext attendanceDB = new AttendanceDBContext();
@@ -46,7 +44,7 @@ public class TakeAttendancesController extends BaseRequiredAuthenticationControl
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles) throws ServletException, IOException {
         int ssid = Integer.parseInt(request.getParameter("ssid"));  // Assuming "id" is the session ID
         AttendanceDBContext attendanceDB = new AttendanceDBContext();
         ArrayList<Attendance> attendances = attendanceDB.getAttendanceBySession(ssid);
@@ -54,9 +52,5 @@ public class TakeAttendancesController extends BaseRequiredAuthenticationControl
         request.getRequestDispatcher("entity/teacher/takeattendance.jsp").forward(request, response);
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+   
 }

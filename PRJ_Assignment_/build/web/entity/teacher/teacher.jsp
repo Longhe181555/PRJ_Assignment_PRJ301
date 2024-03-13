@@ -52,5 +52,10 @@
                     <h2>Students in charge of</h2>
                 <jsp:include page="../student/list.jsp"></jsp:include>
                </div>
+               
+               <p style="text-align: center; text-decoration: none">  
+            © Powered by <a href="http://fpt.edu.vn" target="_blank" style="text-decoration: none">FPT University</a>&nbsp;|&nbsp;
+            <a href="http://cms.fpt.edu.vn/ style="text-decoration: none"" target="_blank" style="text-decoration: none">CMS</a>&nbsp;|&nbsp; <a href="http://library.fpt.edu.vn" target="_blank" style="text-decoration: none">library</a>&nbsp;|&nbsp; <a href="http://library.books24x7.com" style="text-decoration: none" target="_blank">books24x7</a>
+            <span id="ctl00_lblHelpdesk"></span>
     </body>
 </html>

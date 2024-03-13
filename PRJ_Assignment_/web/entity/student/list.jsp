@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        
         <div class="table">
                 <h2>Student List</h2>
 

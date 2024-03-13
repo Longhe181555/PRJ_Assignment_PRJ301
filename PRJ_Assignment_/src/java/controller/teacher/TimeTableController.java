@@ -5,31 +5,28 @@ package controller.teacher;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import controller.authentication.authorization.BaseRBACController;
 import dal.SessionDBContext;
 import dal.TimeSlotDBContext;
 import entity.Account;
+import entity.Role;
 import entity.Session;
 import entity.TimeSlot;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import util.DateTimeHelper;
 
-/**
- *
- * @author ADMIN
- */
+
 @WebServlet(urlPatterns = {"/TimeTableController"})
-public class TimeTableController extends HttpServlet {
+public class TimeTableController extends BaseRBACController {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp,  Account account,ArrayList<Role> roles) throws ServletException, IOException {
         int tid = Integer.parseInt(req.getParameter("id"));
         String raw_from = req.getParameter("from");
         String raw_to = req.getParameter("to");
@@ -70,14 +67,9 @@ public class TimeTableController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account account,ArrayList<Role> roles)
             throws ServletException, IOException {
         // Handle POST requests if needed
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 }
 

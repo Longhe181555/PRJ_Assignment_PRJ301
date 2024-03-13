@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- *
- * @author sonnt
- */
+
 public class DateTimeHelper {
 
     public static Date getWeekStart(Date date) {

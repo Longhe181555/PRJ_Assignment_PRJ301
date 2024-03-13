@@ -7,8 +7,19 @@
         <title>Student</title>
     </head>
     <body>
-        <div>Student Name: ${studentLogIn.sname}</div>
-        <button onclick="window.location.href = 'login_auth'">Sign out</button>
+        <h1><span>FPT University Academic Portal</span> </h1>
+
+        
+        <div id = "nav-container" style="background-color: gray">
+        <div id="nav-user" style="float: right;width: 100%;text-align: right; padding: 5px 10px;background-color: lightgrey">
+            <a>
+                <span id="nav-bar" class="label label-success">${studentLogIn.sname}</span></a> | 
+                <a href="login_auth" class="label label-success" style="text-decoration: none">Sign out</a> |
+            <span id="user-role" class="label label-success"> Student</span>
+        </div>
+        </div>
+
+                <div id="container" style="width:100%">
 
         <br>
         <button onclick="window.location.href = 'student/timetable?id=${param.id}'">View Time Table</button>
@@ -104,6 +115,8 @@
                         </tbody>
                     </table>
                 </div>
-
+            </div>
+         </div>
+                </div>
                 </body>  
                 </html>

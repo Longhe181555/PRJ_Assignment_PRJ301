@@ -5,7 +5,9 @@
 package controller.authentication;
 
 import dal.AccountDBContext;
+import dal.RoleDBContext;
 import entity.Account;
+import entity.Role;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -14,10 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-/**
- *
- * @author sonnt
- */
+
 public class LoginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -44,51 +43,43 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        RoleDBContext dbr = new RoleDBContext();
+        AccountDBContext db = new AccountDBContext();
+        Account account = db.getByUsernamePassword(username, password);
+       
+        if (account != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("account", account);
 
-    AccountDBContext db = new AccountDBContext();
-    Account account = db.getByUsernamePassword(username, password);
+            // Setting cookies
+            Cookie c_user = new Cookie("username", username);
+            Cookie c_pass = new Cookie("password", password);
+            c_user.setMaxAge(5000);
+            c_pass.setMaxAge(5000);
+            response.addCookie(c_pass);
+            response.addCookie(c_user);
 
-    if (account != null) {
-        HttpSession session = request.getSession();
-        session.setAttribute("account", account);
-
-        // Setting cookies
-        Cookie c_user = new Cookie("username", username);
-        Cookie c_pass = new Cookie("password", password);
-        c_user.setMaxAge(5000);
-        c_pass.setMaxAge(5000);
-        response.addCookie(c_pass);
-        response.addCookie(c_user);
-
-        // Redirect based on role
-        if ("Teacher".equals(account.getRole())) {
-            response.sendRedirect("teacher?id=" + account.getId());
-        } else if ("Student".equals(account.getRole())) {
-            response.sendRedirect("student?id=" + account.getId());
-        } else if ("Admin".equals(account.getRole())) {
-            response.sendRedirect("admin?id=" + account.getId());
-        } 
-        else {
-            // Handle other roles or provide a default URL
-            response.sendRedirect(""); // Redirect to the default URL
+            
+            Role role = dbr.getByUsername(username);
+            if(role.getName().equals("student")){
+            response.sendRedirect("student?id="+ account.getId());
+            } else if(role.getName().equals("teacher")||role.getName().equals("supervisor")){
+            response.sendRedirect("teacher?id="+ account.getId());
+            }     
+            
+    
+        } else {
+            //login failed!
+            response.getWriter().println("login failed!");
         }
-    } else {
-        response.sendRedirect("https://www.youtube.com/watch?v=2qBlE2-WL60");
+
     }
-}
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
+
+
+
