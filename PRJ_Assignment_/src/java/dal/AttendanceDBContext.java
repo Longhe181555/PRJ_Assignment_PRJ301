@@ -36,7 +36,7 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         return attendances;
     }
 
-    public Attendance getBySsidandSid(int ssid,int sid) {
+    public Attendance getBySsidandSid(int ssid, int sid) {
         Attendance attendance = null;
         try {
             String sql = "SELECT aid, ssid, sid, isPresent, Description, Date FROM Attendance WHERE ssid = ? and sid = ?";
@@ -115,6 +115,34 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         return log;
     }
 
+    public ArrayList<Attendance> getBySidAndGid(int id, int gid) {
+        ArrayList<Attendance> log = new ArrayList<Attendance>();
+        try {
+            String sql = "SELECT a.aid, a.ssid,a.sid, a.isPresent,a.Description,a.Date\n"
+                    + "FROM Attendance a\n"
+                    + "JOIN Session s ON a.ssid = s.ssid\n"
+                    + "JOIN [Group] g ON s.gid = g.gid\n"
+                    + "WHERE a.sid = ? AND g.gid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.setInt(2, gid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Attendance attendance = new Attendance();
+                attendance.setAid(rs.getInt("aid"));
+                attendance.setSession(ss.get(rs.getInt("ssid")));
+                attendance.setStudent(s.get(rs.getInt("sid")));
+                attendance.setIsPresent(rs.getString("isPresent"));
+                attendance.setDescription(rs.getString("Description"));
+                attendance.setCapturedTime(rs.getDate("Date"));
+                log.add(attendance);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return log;
+    }
+
     public ArrayList<Attendance> getAttendanceByTeacherAndSession(int teacherId, int sessionId) {
         ArrayList<Attendance> attendances = new ArrayList<>();
         try {
@@ -169,19 +197,6 @@ public class AttendanceDBContext extends DBContext<Attendance> {
             Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return attendances;
-    }
-
-    public void updateAttendances(int aid, String isPresent, String description) {
-        try {
-            String sql = "UPDATE Attendance SET isPresent = ?, Description = ? WHERE aid = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, isPresent);
-            stm.setString(2, description);
-            stm.setInt(3, aid);
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void takeAttendances(int ssid, ArrayList<Attendance> atts) {

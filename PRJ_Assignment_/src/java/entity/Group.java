@@ -10,6 +10,25 @@ private int gid;
 private String gname;
 private Subject subject;
 private Teacher pic;
+private int session_number;
+private int attendance_percentage;
+
+    public int getSession_number() {
+        return session_number;
+    }
+
+    public void setSession_number(int session_number) {
+        this.session_number = session_number;
+    }
+
+    public int getAttendance_percentage() {
+        return attendance_percentage;
+    }
+
+    public void setAttendance_percentage(int attendance_percentage) {
+        this.attendance_percentage = attendance_percentage;
+    }
+
 
     public int getGid() {
         return gid;

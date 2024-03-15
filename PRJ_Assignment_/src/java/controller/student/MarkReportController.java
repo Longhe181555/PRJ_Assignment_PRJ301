@@ -41,11 +41,7 @@ public class MarkReportController extends HttpServlet {
                 request.setAttribute("grades", grades);
             }
 
-            // Handle loading additional table to see grade if subid is present
-            if (subid != null) {
-                // Handle loading additional table based on subid
-                // Your code to handle loading based on subid goes here
-            }
+            
 
             ArrayList<Subject> s = dbs.enrolledSubjects(id);
             request.setAttribute("subjects", s);

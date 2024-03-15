@@ -68,7 +68,7 @@ TeacherDBContext t = new TeacherDBContext();
 public Group get(int id) {
     Group group = null;
     try {
-        String sql = "SELECT gid, gname, subid, pic FROM [Group] WHERE gid = ?";
+        String sql = "SELECT gid, gname, subid, pic, session_number, attendance_percentage FROM [Group] WHERE gid = ?";
         PreparedStatement stm = connection.prepareStatement(sql);
         stm.setInt(1, id);
         ResultSet rs = stm.executeQuery();
@@ -78,6 +78,8 @@ public Group get(int id) {
             group.setGname(rs.getString("gname"));
             group.setSubject(sub.get(rs.getInt("subid")));
             group.setPic(t.get(rs.getInt("pic")));
+            group.setSession_number(rs.getInt("session_number"));
+            group.setAttendance_percentage(rs.getInt("attendance_percentage"));
         }
     } catch (SQLException ex) {
         Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
