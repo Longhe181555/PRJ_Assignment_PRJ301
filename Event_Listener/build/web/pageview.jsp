@@ -9,6 +9,6 @@
     <body>
         <h1>Page Views</h1>
         <p>Number of Active session: ${activeSessions}</p>
-        <p>Number of view count: ${viewCount}</p>
+        <p>Number of view count:${viewCount}</p>
     </body>
 </html>
