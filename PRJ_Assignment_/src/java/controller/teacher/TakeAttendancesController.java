@@ -28,9 +28,6 @@ public class TakeAttendancesController extends BaseRBACController {
         ArrayList<Student> students = studentDB.getStudentsBySession(ssid);
         ArrayList<Attendance> attendances = new ArrayList<>();
         Session session = new Session();
-         for (Student student : students) { 
-             System.out.println(student.getSname());
-         }
         session.setSsid(ssid);
         for (Student student : students) {
             Attendance attendance = new Attendance();

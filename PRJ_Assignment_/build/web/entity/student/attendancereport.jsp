@@ -104,7 +104,6 @@
                         <table>
                             <thead class="header-form">
                                 <tr class="header">
-                                    <th>ID</th>
                                     <th>Date</th>
                                     <th>Time Slot</th>
                                     <th>Room</th>
@@ -118,13 +117,12 @@
                             <tbody>
                                 <c:forEach var="att" items="${atts}">
                                     <tr>
-                                        <td>${att.aid}</td>
                                         <td>${att.session.date}</td>
                                         <td>${att.session.timeslot.startHour}:${String.format("%02d", att.session.timeslot.startMinute)}-${att.session.timeslot.endHour}:${String.format("%02d", att.session.timeslot.endMinute)}</td>
                                         <td>${att.session.room.rnumber}</td>
                                         <td>${att.session.teacher.tname}</td>
                                         <td>${att.session.group.gname}</td>
-                                        <td>${att.isPresent}</td>
+                                        <td>${att.isPresent == null ? 'Not yet' : att.isPresent}</td>
                                         <td>${att.description}</td>
                                     </tr>
                                 </c:forEach>

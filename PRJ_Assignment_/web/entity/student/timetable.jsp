@@ -92,15 +92,30 @@
             </div>          
 
 
+
             <table>
                 <tr class="header">
                     <td class="header-form">
                         <form action="timetable" method="GET">
                             <input type="hidden" value="${param.id}" name="id"/>
-                            From: <input type="date" name="from" value="${requestScope.from}"/> <br>
-                            To: <input type="date" name="to" value="${requestScope.to}"/> <br>
+                            Select Week: 
+                            <select name="week">
+                                <option value="">Select Week</option>
+                                <c:forEach var="week" items="${weeks}">
+                                    <c:choose>
+                                        <c:when test="${week eq param.week}">
+                                            <option value="${week}" selected>${week}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${week}">${week}</option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>
                             <input type="submit" value="View"/> 
                         </form>
+
+
                     </td>
                     <c:forEach items="${requestScope.dates}" var="d">
                         <td class="date-cell">
@@ -120,10 +135,10 @@
                                             ${atts.session.group.gname} - ${atts.session.group.subject.subname}
                                         </a>
                                         <br>
-                                         <div style="background-color: #5cb85c;border-radius:2.4375px; width: 70px;color:white; display:inline; font-weight:700;font-size:9.5px"> 
-                                        ${atts.session.timeslot.startHour}:${String.format("%02d", atts.session.timeslot.startMinute)} -
-                                        ${atts.session.timeslot.endHour}:${String.format("%02d", atts.session.timeslot.endMinute)}
-                                         </div>
+                                        <div style="background-color: #5cb85c;border-radius:2.4375px; width: 70px;color:white; display:inline; font-weight:700;font-size:9.5px"> 
+                                            ${atts.session.timeslot.startHour}:${String.format("%02d", atts.session.timeslot.startMinute)} -
+                                            ${atts.session.timeslot.endHour}:${String.format("%02d", atts.session.timeslot.endMinute)}
+                                        </div>
                                         <br> Status:
                                         <c:choose>
                                             <c:when test="${atts.isPresent eq 'T'}">

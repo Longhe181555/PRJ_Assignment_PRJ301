@@ -118,11 +118,13 @@ public class AttendanceDBContext extends DBContext<Attendance> {
     public ArrayList<Attendance> getBySidAndGid(int id, int gid) {
         ArrayList<Attendance> log = new ArrayList<Attendance>();
         try {
-            String sql = "SELECT a.aid, a.ssid,a.sid, a.isPresent,a.Description,a.Date\n"
-                    + "FROM Attendance a\n"
-                    + "JOIN Session s ON a.ssid = s.ssid\n"
-                    + "JOIN [Group] g ON s.gid = g.gid\n"
-                    + "WHERE a.sid = ? AND g.gid = ?";
+            String sql = "SELECT a.aid, se.ssid, e.sid, a.isPresent, a.Description, a.Date \n"
+                    + "FROM Student s \n"
+                    + "INNER JOIN Enrollment e ON s.sid = e.sid \n"
+                    + "INNER JOIN [Group] g ON g.gid = e.gid \n"
+                    + "INNER JOIN Session se ON se.gid = g.gid \n"
+                    + "LEFT JOIN Attendance a ON a.sid = s.sid AND a.ssid = se.ssid \n"
+                    + "WHERE s.sid = ? and g.gid = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.setInt(2, gid);

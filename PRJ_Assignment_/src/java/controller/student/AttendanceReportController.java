@@ -55,7 +55,6 @@ public class AttendanceReportController extends HttpServlet {
                 ArrayList<Attendance> atts = dba.getBySidAndGid(sid, gid);
                 request.setAttribute("selected_group", dbg.get(gid));
                 request.setAttribute("atts", atts);
-
                 int absentCount = 0;
                 for (Attendance att : atts) {
                     if ("F".equals(att.getIsPresent())) {

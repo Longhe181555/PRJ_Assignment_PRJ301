@@ -18,7 +18,7 @@
                 border-collapse: collapse;
                 width: 100%;
                 align-self: center;
-        
+
             }
 
             tr.header {
@@ -36,7 +36,7 @@
                 padding: 5px; /* Adjust the padding as needed */
             }
 
-            
+
             table.session-table {
                 border-collapse: collapse;
                 width: 100%;
@@ -127,14 +127,14 @@
                             <td style="border: 1px solid #000;">
                                 <c:forEach items="${requestScope.sessions}" var="session">
                                     <c:if test="${session.date eq d and session.timeslot.tsid eq slot.tsid}">
-                                         <a href="../activitydetails?ssid=${session.ssid}&tid=${param.id}" style="text-decoration: none">
+                                        <a href="../activitydetails?ssid=${session.ssid}&tid=${param.id}" style="text-decoration: none">
                                             ${session.group.gname}
-                                         </a> <br>
-                                         <div style="background-color: #5cb85c;border-radius:2.4375px; width: 70px;color:white; dislay:inline; font-weight:700;font-size:9.5px"> 
-                                        ${session.timeslot.startHour}:${String.format("%02d", session.timeslot.startMinute)} -
-                                        ${session.timeslot.endHour}:${String.format("%02d", session.timeslot.endMinute)}
-                                         </div>
-                                        
+                                        </a> <br>
+                                        <div style="background-color: #5cb85c;border-radius:2.4375px; width: 70px;color:white; dislay:inline; font-weight:700;font-size:9.5px"> 
+                                            ${session.timeslot.startHour}:${String.format("%02d", session.timeslot.startMinute)} -
+                                            ${session.timeslot.endHour}:${String.format("%02d", session.timeslot.endMinute)}
+                                        </div>
+
                                         <form action="../takeattendance" method="GET">
                                             <input type="hidden" name="ssid" value="${session.ssid}" />
                                             <input type="hidden" name="tid" value="${session.teacher.tid}" />
@@ -152,6 +152,9 @@
                     </tr>
                 </c:forEach>
             </table>
+
+                                       
+
 
             <div class="table">
                 <h2>Session List</h2>
