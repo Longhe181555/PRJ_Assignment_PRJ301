@@ -48,6 +48,10 @@
         <servlet-name>AttendanceReportController</servlet-name>
         <servlet-class>controller.student.AttendanceReportController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmailSender</servlet-name>
+        <servlet-class>controller.AdminController.EmailSender</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StudentController</servlet-name>
         <url-pattern>/student</url-pattern>
@@ -95,5 +99,9 @@
     <servlet-mapping>
         <servlet-name>AttendanceReportController</servlet-name>
         <url-pattern>/student/attreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailSender</servlet-name>
+        <url-pattern>/mail</url-pattern>
     </servlet-mapping>
 </web-app>

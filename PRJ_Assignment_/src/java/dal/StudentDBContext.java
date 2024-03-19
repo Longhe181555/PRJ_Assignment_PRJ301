@@ -189,7 +189,7 @@ public class StudentDBContext extends DBContext<Student> {
     public ArrayList<Student> getStudentsBySession(int ssid) {
         ArrayList<Student> students = new ArrayList<>();
         try {
-            String sql = "SELECT s.sid, s.sname, s.sgender "
+            String sql = "SELECT s.sid, s.sname, s.sgender, s.email "
                     + "FROM Student s "
                     + "INNER JOIN Enrollment e ON s.sid = e.sid "
                     + "INNER JOIN [Group] g ON g.gid = e.gid "
@@ -203,6 +203,7 @@ public class StudentDBContext extends DBContext<Student> {
                 student.setSid(rs.getInt("sid"));
                 student.setSname(rs.getString("sname"));
                 student.setSgender(rs.getBoolean("sgender"));
+                student.setEmail(rs.getString("email"));
                 students.add(student);
             }
         } catch (SQLException ex) {

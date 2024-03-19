@@ -250,6 +250,34 @@ public class AttendanceDBContext extends DBContext<Attendance> {
         }
     }
 
+    public boolean checkAttendanceThreshold(int sid, int tid) {
+    try {
+        String sql = "SELECT COUNT(CASE WHEN isPresent = 'F' THEN 1 END) AS F_count,\n"
+                   + "       g.session_number,\n"
+                   + "       g.attendance_percentage\n"
+                   + "FROM Attendance a\n"
+                   + "JOIN Session s ON a.ssid = s.ssid\n"
+                   + "JOIN [Group] g ON s.gid = g.gid\n"
+                   + "WHERE a.sid = ? AND s.tid = ?\n"
+                   + "GROUP BY g.session_number, g.attendance_percentage";
+        PreparedStatement stm = connection.prepareStatement(sql);
+        stm.setInt(1, sid);
+        stm.setInt(2, tid);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            int F_count = rs.getInt("F_count");
+            int session_number = rs.getInt("session_number");
+            int attendance_percentage = rs.getInt("attendance_percentage");
+            int threshold = (session_number * attendance_percentage) / 100;
+            return F_count > threshold;
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(AttendanceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false;
+}
+
+
     @Override
     public void insert(Attendance entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

@@ -9,7 +9,15 @@ public class Student implements IEntity {
     private int sid;
     private String sname;
     private boolean sgender;
+    private String email;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public int getSid() {
         return sid;
     }

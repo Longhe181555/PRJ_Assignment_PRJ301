@@ -3,14 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/entity/teacher/takeattendance.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/entity/teacher/teacher.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/view/activitydetails.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/entity/student/attendancereport.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/entity/teacher/timetable.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/src/java/dal/SubjectDBContext.java</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/entity/student/examschedule.jsp</file>
-            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/src/java/dal/ExamDBContext.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/src/java/controller/AdminController/EmailSender.java</file>
+            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/index.jsp</file>
+            <file>file:/C:/Users/ADMIN/Desktop/SE1817-PRJ/PRJ_Assignment_/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

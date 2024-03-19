@@ -65,11 +65,13 @@ public class TimeTableController extends BaseRBACController {
 
         SessionDBContext sessDB = new SessionDBContext();
 
+        String selectedWeek = DateTimeHelper.getWeekRangeAsString(from);
+        request.setAttribute("selectedWeek", selectedWeek);
+        
+        
         ArrayList<Attendance> attendances = sessDB.getBySid(tid, from, to);
         request.setAttribute("slots", slots);
         request.setAttribute("dates", dates);
-        request.setAttribute("from", from);
-        request.setAttribute("to", to);
         request.setAttribute("attendances", attendances);
 
         request.getRequestDispatcher("../entity/student/timetable.jsp").forward(request, response);

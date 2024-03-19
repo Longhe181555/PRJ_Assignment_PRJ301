@@ -131,5 +131,16 @@ public class DateTimeHelper {
     // Convert the java.util.Date to java.sql.Date
     return new java.sql.Date(endDate.getTime());
 }
-    
+     public static String getWeekRangeAsString(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
+        calendar.add(Calendar.DAY_OF_MONTH, -dayOfWeek + 1);
+        Date weekStart = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 6);
+        Date weekEnd = calendar.getTime();
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        return dateFormat.format(weekStart) + " to " + dateFormat.format(weekEnd);
+    }
 }

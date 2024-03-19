@@ -103,7 +103,7 @@
                                 <option value="">Select Week</option>
                                 <c:forEach var="week" items="${weeks}">
                                     <c:choose>
-                                        <c:when test="${week eq param.week}">
+                                        <c:when test="${week eq selectedWeek}">
                                             <option value="${week}" selected>${week}</option>
                                         </c:when>
                                         <c:otherwise>
