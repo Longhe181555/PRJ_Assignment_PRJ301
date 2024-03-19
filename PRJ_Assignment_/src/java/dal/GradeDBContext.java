@@ -4,6 +4,7 @@
  */
 package dal;
 
+import entity.Exam;
 import entity.Grade;
 import java.util.ArrayList;
 import java.sql.*;
@@ -134,7 +135,7 @@ public class GradeDBContext extends DBContext<Grade> {
                 + "join Exam e on g.eid = e.eid\n"
                 + "join Assessment a on e.aid = a.aid\n"
                 + "where a.subid = ? and g.sid = ?\n"
-                +"Order by a.name ";
+                + "Order by a.name ";
 
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, subid);
@@ -155,4 +156,86 @@ public class GradeDBContext extends DBContext<Grade> {
 
         return grades;
     }
+
+    public ArrayList<Grade> getByGidAndAid(int gid, int aid) {
+        ArrayList<Grade> grades = new ArrayList<>();
+        String sql = "SELECT  s.[sid]\n"
+                + "      ,[sname]\n"
+                + "	  ,gr.grid\n"
+                + "	  ,gr.score\n"
+                + "	  ,a.name\n"
+                + "	  ,a.weight\n"
+                + "	  ,e.eid\n"
+                + "  FROM [Student] s\n"
+                + "  join Enrollment er on er.sid = s.sid\n"
+                + "  join [Group] g on g.gid = er.gid \n"
+                + "  left join Grade gr on gr.sid = s.sid\n"
+                + "  inner join Assessment a on a.subid = g.subid\n"
+                + "   join Exam e on e.aid = a.aid     \n"
+                + "  where er.gid = ? and a.aid = ?";
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, gid);
+            stm.setInt(2, aid);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Grade grade = new Grade();
+                grade.setGrid(rs.getInt("grid"));
+                grade.setExam(examDBContext.get(rs.getInt("eid")));
+                grade.setStudent(studentDBContext.get(rs.getInt("sid")));
+                grade.setScore(rs.getInt("score"));
+                grades.add(grade);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return grades;
+    }
+    public void takeGrades(int eid, int gid, ArrayList<Grade> grades) {
+    try {
+        connection.setAutoCommit(false);
+
+        // Delete existing grades for the given exam
+        String sqlRemoveGrades = "DELETE FROM Grade WHERE eid = ? and sid in (\n" +
+"	  select s.sid from Student s\n" +
+"	  join Enrollment e on s.sid = e.sid\n" +
+"	  Where e.gid = ?\n" +
+"	  )";
+        try (PreparedStatement stmRemoveGrades = connection.prepareStatement(sqlRemoveGrades)) {
+            stmRemoveGrades.setInt(1, eid);
+            stmRemoveGrades.setInt(2, gid);
+            stmRemoveGrades.executeUpdate();
+        }
+
+        // Insert new grades
+        String sqlInsertGrade = "INSERT INTO Grade (grid ,eid, sid, score) VALUES (?,?, ?, ?)";
+        try (PreparedStatement stmInsertGrade = connection.prepareStatement(sqlInsertGrade)) {
+            for (Grade grade : grades) {
+                stmInsertGrade.setInt(1, eid*grade.getStudent().getSid());
+                stmInsertGrade.setInt(2, eid);
+                stmInsertGrade.setInt(3, grade.getStudent().getSid());
+                stmInsertGrade.setInt(4, grade.getScore());
+                stmInsertGrade.addBatch();
+            }
+            stmInsertGrade.executeBatch();
+        }
+
+        connection.commit();
+    } catch (SQLException ex) {
+        Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            connection.rollback();
+        } catch (SQLException ex1) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+        }
+    } finally {
+        try {
+            connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
 }

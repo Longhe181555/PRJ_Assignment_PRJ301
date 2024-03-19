@@ -52,6 +52,14 @@
         <servlet-name>EmailSender</servlet-name>
         <servlet-class>controller.AdminController.EmailSender</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>takeAssessment</servlet-name>
+        <servlet-class>controller.teacher.TakeAssessment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GradingController</servlet-name>
+        <servlet-class>controller.teacher.GradingController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StudentController</servlet-name>
         <url-pattern>/student</url-pattern>
@@ -103,5 +111,13 @@
     <servlet-mapping>
         <servlet-name>EmailSender</servlet-name>
         <url-pattern>/mail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GradingController</servlet-name>
+        <url-pattern>/teacher/grading</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>takeAssessment</servlet-name>
+        <url-pattern>/teacher/assessment</url-pattern>
     </servlet-mapping>
 </web-app>

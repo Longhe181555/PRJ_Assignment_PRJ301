@@ -100,6 +100,7 @@
                         "> Information Access(Tra cứu thông tin)</h4>
                     <ul class="navi-list">
                         <li> <a href="teacher/timetable?id=${param.id}" class="navi-link">Weekly timetable</a>(Thời khóa biểu từng tuần)</li>
+                        <li> <a href="teacher/assessment?id=${param.id}" class="navi-link">Check Assessment</a>(Take Assessment)</li>
                     </ul>
 
                 </div>

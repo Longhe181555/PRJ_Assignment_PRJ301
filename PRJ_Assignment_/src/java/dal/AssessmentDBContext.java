@@ -36,6 +36,27 @@ public class AssessmentDBContext extends DBContext<Assessment> {
         }
         return assessments;
     }
+    public ArrayList<Assessment> listBySubid(int subid) {
+        ArrayList<Assessment> assessments = new ArrayList<>();
+        try {
+            String sql = "SELECT aid, subid, weight, name,on_Class FROM [Assessment] WHERE subid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Assessment assessment = new Assessment();
+                assessment.setAid(rs.getInt("aid"));
+                assessment.setWeight(rs.getInt("weight"));
+                assessment.setSubject(sub.get(rs.getInt("subid")));
+                assessment.setAname(rs.getString("name"));
+                assessment.setOn_Class(rs.getBoolean("on_Class"));
+                assessments.add(assessment);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AssessmentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return assessments;
+    }
 
     @Override
     public void update(Assessment entity) {

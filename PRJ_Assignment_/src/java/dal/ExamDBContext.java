@@ -70,7 +70,7 @@ public class ExamDBContext extends DBContext<Exam> {
     public Exam get(int id) {
         Exam exam = null;
         try {
-            String sql = "SELECT eid, aid, date, slotTime FROM Exam WHERE eid = ?";
+            String sql = "SELECT eid, aid, date, slotTime,rid FROM Exam WHERE eid = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
@@ -79,7 +79,7 @@ public class ExamDBContext extends DBContext<Exam> {
                 exam.setEid(rs.getInt("eid"));
                 exam.setAssessment(assessmentDBContext.get(rs.getInt("aid")));
                 exam.setDate(rs.getDate("date"));
-                exam.setTimeslot(timeSlotDBContext.get(rs.getInt("tsid")));
+                exam.setTimeslot(timeSlotDBContext.get(rs.getInt("slotTime")));
                 exam.setRoom(roomDBContext.get(rs.getInt("rid")));
             }
         } catch (SQLException ex) {
@@ -87,6 +87,7 @@ public class ExamDBContext extends DBContext<Exam> {
         }
         return exam;
     }
+    
     
     public ArrayList<Exam> getBySid(int sid) {
     ArrayList<Exam> exams = new ArrayList<>();

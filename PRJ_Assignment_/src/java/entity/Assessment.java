@@ -10,7 +10,15 @@ public class Assessment implements IEntity{
     private Subject subject;
     private int weight;
     private String aname;
+    private boolean on_Class;
 
+    public boolean isOn_Class() {
+        return on_Class;
+    }
+
+    public void setOn_Class(boolean On_Class) {
+        this.on_Class = On_Class;
+    }
     public int getAid() {
         return aid;
     }
